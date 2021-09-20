@@ -1,0 +1,26 @@
+<template>
+    <lightning-card title="Criar novo caso" icon-name="standard:case">
+        <div class="slds-m-around_medium">
+            <lightning-record-edit-form object-api-name={objectApiName} onsubmit={handleSubmit} onsuccess={createSuccessToastEvent} onerror={createFailedToastEvent}>
+
+                <lightning-input-field
+                   field-name={subjectField}>
+                </lightning-input-field>
+
+                <lightning-input-field
+                   field-name={descriptionField}>
+                </lightning-input-field>
+
+                <div class="slds-clearfix">
+                    <lightning-button
+                        variant="brand"
+                        type="submit"
+                        label="Criar caso"
+                        class="slds-align_absolute-center">
+                    </lightning-button>
+                </div>
+
+            </lightning-record-edit-form>
+        </div>
+    </lightning-card>
+</template>
