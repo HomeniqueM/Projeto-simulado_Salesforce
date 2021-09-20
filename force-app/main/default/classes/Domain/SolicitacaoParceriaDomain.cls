@@ -2,16 +2,17 @@ public class SolicitacaoParceriaDomain {
     
     public List<SolicitacaoParceria__c> listOfSolicitation {get;set;}
     public Map<id,SolicitacaoParceria__c> mapOldSolicitation {get;set;}
-    private List<SolicitacaoParceria__c> solicitationApproved =  new List<SolicitacaoParceria__c>();
+    public List<SolicitacaoParceria__c> requested {get;set;}
     
-    
+  
     public SolicitacaoParceriaDomain(List<SolicitacaoParceria__c> listOfSolicitation, Map<id,SolicitacaoParceria__c> mapOldSolicitation ){
         this.listOfSolicitation = listOfSolicitation;
         this.mapoldSolicitation = mapOldSolicitation; 
+        this.requested =  new List<SolicitacaoParceria__c>( );
     }
     
     
-    public void generateListFromStatus(String status){
+    public void getListFromStatus(String status){
         
         
         for(SolicitacaoParceria__c sp : listOfSolicitation){
@@ -23,17 +24,11 @@ public class SolicitacaoParceriaDomain {
             SolicitacaoParceria__c old = this.mapOldSolicitation.get(sp.Id);
             
             if( old.Status__c != sp.Status__c && sp.Status__c == status){
-                solicitationApproved.add(sp);
+                requested.add(sp);
             }
             
         }
-        
+       system.debug('Criando a lista baseada no status ');
     }
     
-    public void ConverteToContract ( ){ 
-        ContactDomain cont = new ContactDomain();
-        
-        cont.createContactFromPartnership(solicitationApproved);
-        cont.insertContatctList();
-    }
 }

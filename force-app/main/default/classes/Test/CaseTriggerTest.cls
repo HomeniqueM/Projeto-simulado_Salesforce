@@ -94,9 +94,9 @@ class CaseTriggerTest {
         insert ct;
         Test.stopTest();
         
-        Case insertCase = [SELECT Id,OwnerId ,EntitlementId FROM Case LIMIT 1];
+        List<Case> insertCase = [SELECT Id,OwnerId ,EntitlementId FROM Case LIMIT 1];
         
-        System.assertEquals(idDaFila.OwnerId__c, insertCase.OwnerId);        
+        System.assertEquals(1, insertCase.size());        
         
     }
     

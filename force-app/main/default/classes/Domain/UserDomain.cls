@@ -4,43 +4,41 @@ public class UserDomain {
     private final String encodingFormat = 'UTF-8';
     private final String timeZone       = 'America/Sao_Paulo';
     private String partnerProfileId;
-    private id idPermissionSet;
+    
     
     List<User> users = new List<User>();
     
     public UserDomain() {
         this.users = new List<User>();
-        //this.partnerProfileId = PerfilParceiro__c.getOrgDefaults().PerfilId__c;
+        this.partnerProfileId = PerfilParceiro__c.getOrgDefaults().PerfilId__c;
     }
     
     public void newUsersFromContacts(List<Contact> contacts) {
-        
-        for(Contact c : contacts) {
-            User tmp = new User();
+        if(contacts.size() > 0) {
             
-            tmp.ContactId         = c.Id;
-            tmp.ProfileId          = this.partnerProfileId;            
-            tmp.Username          = createUserName(c.FirstName, c.LastName);
-            tmp.FirstName         = c.FirstName;
-            tmp.LastName          = c.LastName;
-            tmp.Alias             = createAlias(c.FirstName,c.LastName);
-            tmp.MobilePhone       = c.MobilePhone;
-            tmp.Email             = c.Email;
-            tmp.CommunityNickname = c.Name;
-            
-            tmp.IsPortalEnabled   = true;
-            
-            tmp.EmailEncodingKey  = this.encodingFormat;
-            tmp.TimeZoneSidKey    = this.timeZone;
-            tmp.LocaleSidKey      = this.locale;
-            tmp.LanguageLocaleKey = this.locale;
-            
-            tmp.IsActive = true;
-            
-            users.add(tmp);
-        }
-        
+            for(Contact c : contacts) {
+                User tmp              = new User();
+                tmp.ContactId         = c.Id;
+                tmp.ProfileId         = this.partnerProfileId;            
+                tmp.Username          = createUserName(c.FirstName, c.LastName);
+                tmp.FirstName         = c.FirstName;
+                tmp.LastName          = c.LastName;
+                tmp.Alias             = createAlias(c.FirstName,c.LastName);
+                tmp.MobilePhone       = c.MobilePhone;
+                tmp.Email             = c.Email;
+                tmp.CommunityNickname = c.Name;
 
+                tmp.EmailEncodingKey  = this.encodingFormat;
+                tmp.TimeZoneSidKey    = this.timeZone;
+                tmp.LocaleSidKey      = this.locale;
+                tmp.LanguageLocaleKey = this.locale;
+                
+                tmp.IsActive          = true;
+                
+                users.add(tmp);
+            }
+            
+        }
     }
     
     public void insertUsers() {
@@ -57,4 +55,13 @@ public class UserDomain {
         return FirstName + '.' + LastName + Math.round(Math.random() * 100) + '@cupimExtermina.com';
     }
     
+    public Set<id> getSetIds( ){
+        Set<id> ids = new Set<id>();
+        
+        for(User u : users ){
+            ids.add(u.id);
+        }
+        
+        return ids;
+    }
 }

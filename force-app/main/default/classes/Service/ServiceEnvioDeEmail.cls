@@ -1,4 +1,6 @@
 public class ServiceEnvioDeEmail {
+    
+    
     public static void Enviar(List<Lead> novosLeads) {
         List<Messaging.SingleEmailMessage> emailsToSend = new List<Messaging.SingleEmailMessage>(); 
         EmailTemplate idTemplate = SelectorEmail.getEmailTemplate();
@@ -13,5 +15,9 @@ public class ServiceEnvioDeEmail {
         
         Messaging.sendEmail(emailsToSend);
     }
+    
+    
+
+    
     
 }
