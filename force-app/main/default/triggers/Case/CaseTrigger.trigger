@@ -1,5 +1,6 @@
 trigger CaseTrigger on Case (before insert,after update, after insert) {
 	
+	
 	if(Trigger.isInsert){
 		if(Trigger.isBefore){
 			ServiceCase.iniciarTempoDeAtendimento(Trigger.new);

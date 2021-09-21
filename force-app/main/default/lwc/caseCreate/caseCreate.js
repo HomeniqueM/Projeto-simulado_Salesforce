@@ -1,13 +1,22 @@
-import { LightningElement, track,wire } from 'lwc';
+import { LightningElement,wire } from 'lwc';
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import USER_ID      from '@salesforce/user/Id';
-import ACCOUNT_ID   from '@salesforce/schema/User.Contact.Account.id';
+import ACCOUNT_ID   from '@salesforce/schema/User.Contact.Account.Id';
 import CONTACT_ID   from '@salesforce/schema/User.Contactid';
 import USER_NAME    from '@salesforce/schema/User.Name';  
+import SUBJECT_FIELD from '@salesforce/schema/Case.Subject'
+import CASE_OBJECT from '@salesforce/schema/Case'
+import DESCRIPTION_FIELD from '@salesforce/schema/Case.Description';
 
 export default class CaseCreate extends LightningElement {
-    @track visibility = false
+    
+    // Variaveis
+    objectApiName    = CASE_OBJECT
+    subjectField     = SUBJECT_FIELD  
+    descriptionField = DESCRIPTION_FIELD
+
+    
     // Recuperar os dados do usuário da pagina
     @wire(getRecord,{recordId: USER_ID, fields:[CONTACT_ID,USER_NAME],optionalFields: [ACCOUNT_ID]})
     user 
@@ -20,42 +29,46 @@ export default class CaseCreate extends LightningElement {
         return getFieldValue(this.user.data, ACCOUNT_ID)
     }
 
-    resertFields(){
-        const inputFields = this.template.querySelectorAll('lightning-input-field')
-        if(inputFields){
-            inputFields.forEach(field => {field.reset()                
+    handleReset(event) {
+
+        const inputFields = this.template.querySelectorAll(
+            'lightning-input-field'
+        );
+        if (inputFields) {
+            inputFields.forEach(field => {
+                field.reset();
             });
         }
-    }
 
-    handleClick(event){
-        const label = event.target.label;
-        if(label == 'Criar novo caso'){
-            this.visibility = true
-        }else if( label == 'Cancelar'){
-            this.resertFields()
-            this.visibility = false
-        }
-    }
+        console.log("Reniciano")
+     }
 
 
     handleSave(event){
+        console.log("Salvando")
+
         event.preventDefault();
         const siteCase     = event.detail.fields
         siteCase.status    = 'Novo'
         siteCase.Origin    = 'Portal do cliente'
         siteCase.AccountId = this.account
         siteCase.ContactId = this.contact
+        
 
-        this.template.querySelector('lightning-input-field').submit(SiteCase)
+        this.template.querySelector('lightning-record-edit-form').submit(siteCase)
 
-        this.resertFields()
-        this.visibility    = false
+        this.handleReset()
+        
 
-        this.dispatchEvent({
+        this.dispatchEvent(
+            new ShowToastEvent({
             title: 'Caso salvo',
             message: 'O caso foi criado com sucesso',
-            veriant: 'Success'
-        })
+            variant: 'success'
+            
+            
+        }))
+
+        
     }
 }

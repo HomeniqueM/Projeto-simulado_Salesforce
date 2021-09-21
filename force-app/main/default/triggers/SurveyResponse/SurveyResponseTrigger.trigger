@@ -3,7 +3,7 @@ trigger SurveyResponseTrigger on SurveyResponse (after update, after insert) {
     
     if(Trigger.isUpdate){
         if(Trigger.isAfter){
-            SurveyResponseService.customerDoesNotRecommendTheService(Trigger.new);
+         //   SurveyResponseService.customerDoesNotRecommendTheService(Trigger.new);
         }
     }
     
