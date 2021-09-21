@@ -1,7 +1,8 @@
 <template>
     <lightning-card title={lwcTitle} icon-name="standard:case">
         <div class="slds-m-around_medium">
-            <lightning-record-edit-form object-api-name={objectApiName} onsubmit={handleSave} onsuccess={createSuccessToastEvent} onerror={createFailedToastEvent}>
+            <lightning-record-edit-form object-api-name={objectApiName} onsubmit={handleSave} onsuccess={createSuccessToastEvent} onerror={createFailedToastEvent} 
+            >
 
                 <lightning-input-field
                    field-name={subjectField}>
