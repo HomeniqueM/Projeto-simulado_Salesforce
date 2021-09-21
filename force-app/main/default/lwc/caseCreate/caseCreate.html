@@ -1,5 +1,5 @@
 <template>
-    <lightning-card title="Criar novo caso" icon-name="standard:case">
+    <lightning-card title={lwcTitle} icon-name="standard:case">
         <div class="slds-m-around_medium">
             <lightning-record-edit-form object-api-name={objectApiName} onsubmit={handleSave} onsuccess={createSuccessToastEvent} onerror={createFailedToastEvent}>
 
@@ -19,7 +19,7 @@
                     <lightning-button
                         variant="brand"
                         type="submit"
-                        label="Gerar novo caso"
+                        label={lwcsalvebutton}
                         class="slds-align_absolute-center">
                     </lightning-button>
                 </div>

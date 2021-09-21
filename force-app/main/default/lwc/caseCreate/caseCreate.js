@@ -1,4 +1,4 @@
-import { LightningElement,wire } from 'lwc';
+import { LightningElement,wire,api } from 'lwc';
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import USER_ID      from '@salesforce/user/Id';
@@ -8,13 +8,20 @@ import USER_NAME    from '@salesforce/schema/User.Name';
 import SUBJECT_FIELD from '@salesforce/schema/Case.Subject'
 import CASE_OBJECT from '@salesforce/schema/Case'
 import DESCRIPTION_FIELD from '@salesforce/schema/Case.Description';
+import LWC_TITLE from '@salesforce/label/c.LWCCaseCreateTitulo';
+import LWC_SALVEBUTTON from '@salesforce/label/c.LWCCaseCreateBotaoSalvar';
 
 export default class CaseCreate extends LightningElement {
-    
+  
     // Variaveis
     objectApiName    = CASE_OBJECT
     subjectField     = SUBJECT_FIELD  
     descriptionField = DESCRIPTION_FIELD
+    
+    lwcTitle         =  LWC_TITLE;
+    lwcsalvebutton   = LWC_SALVEBUTTON;
+
+
 
     
     // Recuperar os dados do usuário da pagina
@@ -28,6 +35,8 @@ export default class CaseCreate extends LightningElement {
     get account(){
         return getFieldValue(this.user.data, ACCOUNT_ID)
     }
+
+
 
     handleReset(event) {
 
@@ -72,3 +81,4 @@ export default class CaseCreate extends LightningElement {
         
     }
 }
+
