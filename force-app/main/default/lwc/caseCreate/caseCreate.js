@@ -1,4 +1,4 @@
-import { LightningElement,wire }     from 'lwc';
+import { LightningElement,track,wire }     from 'lwc';
 import { getRecord, getFieldValue }  from 'lightning/uiRecordApi';
 import { ShowToastEvent }            from 'lightning/platformShowToastEvent';
 import { NavigationMixin }           from 'lightning/navigation';
@@ -13,7 +13,7 @@ import LWC_TITLE                     from '@salesforce/label/c.LWCCaseCreateTitu
 import LWC_SALVEBUTTON               from '@salesforce/label/c.LWCCaseCreateBotaoSalvar';
 
 export default class CaseCreate extends NavigationMixin(LightningElement)  {
-  
+    @track isLoading = false;
     // Variaveis
     objectApiName    = CASE_OBJECT;
     subjectField     = SUBJECT_FIELD;  
@@ -53,7 +53,9 @@ export default class CaseCreate extends NavigationMixin(LightningElement)  {
 
 
     handleSave(event){
-        console.log("Salvando")
+        isLoading = true;
+
+        console.log("Salvando");
 
         event.preventDefault();
         const siteCase     = event.detail.fields
